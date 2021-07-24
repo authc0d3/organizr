@@ -17,6 +17,7 @@ You only need [Go](https://golang.org/) instaled on your machine to compile the 
 2. Build CLI tool
 
 ```
+> cd organizr
 > go build organizr.go
 ```
 
