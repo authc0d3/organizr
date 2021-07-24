@@ -110,7 +110,7 @@ func main() {
     destPath = srcPath
   }
 
-  if *srcPath == "" || *help {
+  if *srcPath == "" || *help == true {
     printHelp()
     os.Exit(0)
   }
