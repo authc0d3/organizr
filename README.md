@@ -28,7 +28,7 @@ You only need [Go](https://golang.org/) instaled on your machine to compile the 
 > go build organizr.go
 ```
 
-3. Ejecute in a directory to organize files
+4. Ejecute in a directory to organize files
 
 Only change "source-dir-path" by the path you want to organize. Flag -dest is optional.
 
@@ -36,13 +36,13 @@ Only change "source-dir-path" by the path you want to organize. Flag -dest is op
 > organizr -src="source-dir-path" [-dest="output-dir-path"]
 ```
 
-4. Get help
+5. Get help
 
 ```
 > organizr -h
 ```
 
-5. Future features
+## ⏲️ Coming soon...
 
 - Allow reverse operations
 - Can config output subfolder names by extension
