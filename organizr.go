@@ -13,7 +13,7 @@ import (
 )
 
 // Constants
-const version = "0.22"
+const version = "0.23"
 
 // Globals
 var srcPath *string
