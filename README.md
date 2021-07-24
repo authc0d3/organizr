@@ -28,7 +28,13 @@ Only change "source-dir-path" by the path you want to organize. Flag -dest is op
 > organizr -src="source-dir-path" [-dest="output-dir-path"]
 ```
 
-4. Future features
+4. Get help
+
+```
+> organizr -h
+```
+
+5. Future features
 
 [] Allow reverse operations
 [] Can config output subfolder names by extension
