@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/sha256"
 	"flag"
 	"fmt"
 	"os"
@@ -15,8 +16,8 @@ import (
 const version = "0.22"
 
 // Globals
-var srcPath *string;
-var destPath *string;
+var srcPath *string
+var destPath *string
 
 // Print help
 func printHelp() {
@@ -52,25 +53,30 @@ func getSubfolder(file string) string {
 }
 
 // Find safe filename adding a index on the end of the filename to prevent rewrite files
-func getFinalPath(filePath string, iteration int) string {
-  finalPath := filePath
-  _, err := os.Stat(finalPath)
+func getFinalPath(currentFilePath string, futureFilePath string, iteration int) string {
+  _, err := os.Stat(futureFilePath)
   if err == nil {
-    comparator := equalfile.New(nil, equalfile.Options{})
-    equal, _ := comparator.CompareFile(filePath, finalPath)
+    // If is same file return same name to replace one for another
+    comparator := equalfile.NewMultiple(nil, equalfile.Options{}, sha256.New(), true)
+    equal, _ := comparator.CompareFile(currentFilePath, futureFilePath)
     if equal {
-      return finalPath;
+      return futureFilePath;
     }
-    ext := filepath.Ext(finalPath)
-    fileNewName := finalPath[0:len(finalPath)-len(ext)]
+
+    // If files are not the same, modify (index) part of file
+    // to increment it in the next call
+    ext := filepath.Ext(futureFilePath)
+    fileNewName := futureFilePath[0:len(futureFilePath)-len(ext)]
     fileEnding := " (" + strconv.Itoa(iteration - 1) + ")"
     fileEndingIndex := strings.LastIndex(fileNewName, fileEnding)
     if fileEndingIndex == len(fileNewName) - len(fileEnding) {
       fileNewName = fileNewName[:fileEndingIndex]
     }
-    return getFinalPath(fileNewName + " (" + strconv.Itoa(iteration) + ")" + ext, iteration + 1)
+
+    // Call recursively until find a valid name for file
+    return getFinalPath(currentFilePath, fileNewName + " (" + strconv.Itoa(iteration) + ")" + ext, iteration + 1)
   }
-  return finalPath
+  return futureFilePath
 }
 
 // Move file to another folder
@@ -83,7 +89,7 @@ func moveFile(file string, folder string) {
     }
   }
 
-  destFilePath := getFinalPath(destPath + "/" + filepath.Base(file), 1)
+  destFilePath := getFinalPath(file, destPath + "/" + filepath.Base(file), 1)
   err := os.Rename(file, destFilePath)
   if err != nil {
     fmt.Println("Error moving file: " + file)
