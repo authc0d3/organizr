@@ -7,10 +7,16 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/udhos/equalfile"
 )
 
 // Constants
 const version = "0.21"
+
+// Globals
+var srcPath *string;
+var destPath *string;
 
 // Print help
 func printHelp() {
@@ -48,8 +54,13 @@ func getSubfolder(file string) string {
 // Find safe filename adding a index on the end of the filename to prevent rewrite files
 func getFinalPath(filePath string, iteration int) string {
   finalPath := filePath
-  _, err := os.Stat(filePath)
-  for err == nil {
+  _, err := os.Stat(finalPath)
+  if err == nil {
+    comparator := equalfile.New(nil, equalfile.Options{})
+    equal, _ := comparator.CompareFile(filePath, finalPath)
+    if equal {
+      return finalPath;
+    }
     ext := filepath.Ext(finalPath)
     fileNewName := finalPath[0:len(finalPath)-len(ext)]
     fileEnding := " (" + strconv.Itoa(iteration - 1) + ")"
@@ -100,8 +111,8 @@ func organizeFiles(srcPath string, destPath string, recursive bool) {
 
 func main() {
   // Get and validate flags
-  srcPath := flag.String("src", "", "Source directory")
-  destPath := flag.String("dest", "", "Output directory")
+  srcPath = flag.String("src", "", "Source directory")
+  destPath = flag.String("dest", "", "Output directory")
   recursive := flag.Bool("r", false, "Recursive mode")
   help := flag.Bool("h", false, "Show help")
   flag.Parse()
@@ -110,7 +121,7 @@ func main() {
     destPath = srcPath
   }
 
-  if *srcPath == "" || *help == true {
+  if *srcPath == "" || *help {
     printHelp()
     os.Exit(0)
   }

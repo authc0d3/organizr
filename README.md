@@ -1,6 +1,7 @@
 # Organizr
 
 A simple cli application written in [Go](https://golang.org/) to automate file organization.
+This project uses [equalfile](https://github.com/udhos/equalfile) module to compare files efficiently.
 
 ## ✅ Requirements
 
@@ -14,10 +15,16 @@ You only need [Go](https://golang.org/) instaled on your machine to compile the 
 > git clone https://github.com/authc0d3/organizr.git
 ```
 
-2. Build CLI tool
+2. Install dependencies
 
 ```
 > cd organizr
+> go get -u -v -f all
+```
+
+3. Build CLI tool
+
+```
 > go build organizr.go
 ```
 
