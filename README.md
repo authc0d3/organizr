@@ -46,6 +46,7 @@ Only change "source-dir-path" by the path you want to organize. Flag -dest is op
 
 - Allow reverse operations
 - Can config output subfolder names by extension
+- Erase empty folders after organization
 
 ## :book: License
 

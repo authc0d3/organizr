@@ -63,8 +63,8 @@ func getFinalPath(currentFilePath string, futureFilePath string, iteration int) 
       return futureFilePath;
     }
 
-    // If files are not the same, modify (index) part of file
-    // to increment it in the next call
+    // If files are not the same, remove final "(index)" part of file
+    // to add it in the next call incremented by 1
     ext := filepath.Ext(futureFilePath)
     fileNewName := futureFilePath[0:len(futureFilePath)-len(ext)]
     fileEnding := " (" + strconv.Itoa(iteration - 1) + ")"
