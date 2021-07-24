@@ -36,8 +36,8 @@ Only change "source-dir-path" by the path you want to organize. Flag -dest is op
 
 5. Future features
 
-[] Allow reverse operations
-[] Can config output subfolder names by extension
+- Allow reverse operations
+- Can config output subfolder names by extension
 
 ## :book: License
 
