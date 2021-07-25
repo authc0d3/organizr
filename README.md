@@ -36,10 +36,10 @@ Only change "source-dir-path" by the path you want to organize. Flag -dest is op
 > organizr -src="source-dir-path" [-dest="output-dir-path"]
 ```
 
-5. Get help
+5. Advanced usage
 
 ```
-> organizr -h
+> organizr -help
 ```
 
 ## ⏲️ Coming soon...

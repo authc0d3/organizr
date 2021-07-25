@@ -15,18 +15,19 @@ func Organizr() {
   srcPath = flag.String("src", "", "Source directory")
   destPath = flag.String("dest", "", "Output directory")
   recursive := flag.Bool("r", false, "Recursive mode")
-  help := flag.Bool("h", false, "Show help")
+  copyMode := flag.Bool("c", false, "Copy files instead of moving them")
+  showAbout := flag.Bool("about", false, "Show about info")
   flag.Parse()
 
   if *destPath == "" {
     destPath = srcPath
   }
 
-  if *srcPath == "" || *help {
-    PrintHelp()
+  if *srcPath == "" || *showAbout {
+    PrintAbout()
     os.Exit(0)
   }
 
   // Let the magic begins ;)
-  utils.OrganizeFiles(*srcPath, *destPath, *recursive)
+  utils.OrganizeFiles(*srcPath, *destPath, *recursive, *copyMode)
 }
