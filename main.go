@@ -6,7 +6,7 @@ import (
 )
 
 // Constants
-const version = "0.23"
+const version = "0.24"
 
 func main() {
   os.Setenv("version", version)
