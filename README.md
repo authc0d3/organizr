@@ -25,7 +25,7 @@ You only need [Go](https://golang.org/) instaled on your machine to compile the 
 3. Build CLI tool
 
 ```
-> go build organizr.go
+> go build
 ```
 
 4. Ejecute in a directory to organize files
