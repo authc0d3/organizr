@@ -1,15 +1,14 @@
 package utils
 
 import (
-  "fmt"
-  "io"
-  "io/fs"
-  "os"
-  "path/filepath"
+	"fmt"
+	"io"
+	"io/fs"
+	"os"
+	"path/filepath"
 )
 
 func createFolder(path string, mode fs.FileMode) bool {
-  // destPath := folder + "/" + GetSubfolder(file)
   if _, err := os.Stat(path); os.IsNotExist(err) {
     err := os.Mkdir(path, mode)
     if err != nil {
@@ -20,7 +19,6 @@ func createFolder(path string, mode fs.FileMode) bool {
   return true
 }
 
-// Copy file
 func copyFile(file string, folder string) bool {
   srcFile, err := os.Open(file)
   if err != nil {
@@ -53,7 +51,6 @@ func copyFile(file string, folder string) bool {
   return true
 }
 
-// Move file to another folder
 func moveFile(file string, folder string) bool {
   destPath := folder + "/" + GetSubfolder(file)
   createFolder(destPath, 0700)
