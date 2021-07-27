@@ -1,0 +1,10 @@
+{
+  "extendsDefault": true,
+  "output": {
+    "defaultFolder": "Other Files",
+    "folders": [
+      { "ext": "svg,eps", "folder": "Vectors" },
+      { "ext": "jpg,tiff", "folder": "Photos" }
+    ]
+  }
+}
