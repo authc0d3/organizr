@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 )
 
 type Folder struct {
@@ -48,7 +49,12 @@ func GetDefaultConfig() Config {
 func GetConfig() Config {
   var config Config
 
-  configFile, err := os.Open("config.json")
+  currentDir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+  if err != nil {
+    return GetDefaultConfig()
+  }
+
+  configFile, err := os.Open(currentDir + "/config.json")
   if err != nil {
     return GetDefaultConfig()
   }
