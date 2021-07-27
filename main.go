@@ -1,8 +1,9 @@
 package main
 
 import (
-  "os"
-  "github.com/authc0d3/organizr/cmd"
+	"os"
+
+	"github.com/authc0d3/organizr/cmd"
 )
 
 // Constants

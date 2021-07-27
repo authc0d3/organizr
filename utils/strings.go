@@ -1,32 +1,31 @@
 package utils
 
 import (
-  "crypto/sha256"
-  "os"
-  "path/filepath"
-  "strconv"
-  "strings"
-  "github.com/udhos/equalfile"
+	"crypto/sha256"
+	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
+
+	"github.com/udhos/equalfile"
 )
 
-// Get folder name by file type
-// TODO: Refactor, change switch by map and regex (best approach)
-func GetSubfolder(file string) string {
+// Get folder name by file type acording to config
+func GetSubfolder(file string, config Config) string {
+  folders, defaultFolder := config.GetOutputConfig()
   ext := strings.Replace(strings.ToLower(filepath.Ext(file)), ".", "", -1)
-  switch ext {
-    case "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "txt", "odt", "ods", "odp", "odg":
-      return "Documents"
-    case "jpg", "jpeg", "png", "gif", "bmp", "tiff":
-      return "Images"
-    case "mp3", "ogg", "wma", "wav":
-      return "Audios"
-    case "mp4", "mkv", "avi", "mov", "mpeg", "wmv":
-      return "Videos"
-    case "exe", "msi", "so", "apk", "ipa":
-      return "Applications"
-    default:
-      return strings.ToUpper(ext)
+  for _, folder := range folders {
+    extensions := strings.Split(folder.Ext, ",")
+    for _, extension := range extensions {
+      if ext == extension {
+        return folder.Folder
+      }
+    }
   }
+  if defaultFolder != "" {
+    return defaultFolder
+  }
+  return strings.ToUpper(ext)
 }
 
 // Find safe filename adding a index on the end of the filename to prevent rewrite files
