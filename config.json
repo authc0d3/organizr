@@ -1,10 +1,11 @@
 {
-  "extendsDefaults": true,
+  "extendsDefault": true,
   "output": {
     "defaultFolder": "Otros",
     "folders": [
       { "ext": "ai", "folder": "Adobe Illustrator" },
-      { "ext": "psd", "folder": "Adobe Photoshop" }
+      { "ext": "psd", "folder": "Adobe Photoshop" },
+      { "ext": "jpg,tiff", "folder": "Fotos" }
     ]
   }
 }

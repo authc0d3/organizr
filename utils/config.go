@@ -13,7 +13,7 @@ type Folder struct {
 }
 
 type Output struct {
-  DefaultFolder string `json:"default"`
+  DefaultFolder string `json:"defaultFolder"`
   Folders []Folder `json:"folders"`
 }
 
