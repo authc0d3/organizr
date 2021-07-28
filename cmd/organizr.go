@@ -29,5 +29,5 @@ func Organizr() {
   }
 
   // Let the magic begins ;)
-  utils.OrganizeFiles(config, *srcPath, *destPath, *recursive, *copyMode)
+  utils.OrganizeFiles(&config, *srcPath, *destPath, *recursive, *copyMode)
 }

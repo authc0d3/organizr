@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 )
 
-var config Config
+var config *Config
 
 func createFolder(path string, mode fs.FileMode) bool {
   if _, err := os.Stat(path); os.IsNotExist(err) {
@@ -67,7 +67,7 @@ func moveFile(file string, folder string) bool {
 }
 
 // Read the source path (recursively or not) and move files
-func OrganizeFiles(conf Config, srcPath string, destPath string, recursive bool, copyMode bool) {
+func OrganizeFiles(conf *Config, srcPath string, destPath string, recursive bool, copyMode bool) {
   config = conf
   err := filepath.Walk(srcPath, func(filePath string, f os.FileInfo, err error) error {
     if !f.IsDir() {

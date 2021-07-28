@@ -30,7 +30,7 @@ You only need [Go](https://golang.org/) instaled on your machine to compile the 
 
 ### 4. Ejecute in a directory to organize files
 
-Only change "source-dir-path" by the path you want to organize. Flag -dest is optional.
+Only change "source-dir-path" by the path you want to organize. Flag -dest is optional, use it only if you want to move al organized files into another directory.
 
 ```
 > organizr -src="source-dir-path" [-dest="output-dir-path"]
@@ -38,7 +38,7 @@ Only change "source-dir-path" by the path you want to organize. Flag -dest is op
 
 ### 5. Customize configuration
 
-You can configure outputs by creating a **config.json** in same folder where you place the binary. You have an example on **test.config.json**, you can customize and rename it as config.json to make it work
+You can configure output folders by creating a **config.json** in same folder where you place the binary. You have an example on **test.config.json**, you can customize and rename it as config.json to make it work.
 
 ```
 {
@@ -70,7 +70,6 @@ The available options are:
 ## ⏲️ Coming soon...
 
 - Allow reverse operations
-- Can config output subfolder names by extension
 - Erase empty folders after organization
 
 ## :book: License

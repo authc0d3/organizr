@@ -11,7 +11,7 @@ import (
 )
 
 // Get folder name by file type acording to config
-func GetSubfolder(file string, config Config) string {
+func GetSubfolder(file string, config *Config) string {
   folders, defaultFolder := config.GetOutputConfig()
   ext := strings.Replace(strings.ToLower(filepath.Ext(file)), ".", "", -1)
   for _, folder := range folders {
