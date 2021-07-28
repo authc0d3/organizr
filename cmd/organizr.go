@@ -12,22 +12,24 @@ func Organizr() {
   config := utils.GetConfig()
 
   // Get and validate flags
-  srcPath := flag.String("src", "", "Source directory")
-  destPath := flag.String("dest", "", "Output directory")
-  recursive := flag.Bool("r", false, "Recursive mode")
-  copyMode := flag.Bool("c", false, "Copy files instead of moving them")
-  showAbout := flag.Bool("about", false, "Show about info")
+  params := utils.OrganizrParams{}
+  params.SrcPath = flag.String("src", "", "Source directory")
+  params.DestPath = flag.String("dest", "", "Output directory")
+  params.Recursive = flag.Bool("r", false, "Recursive mode")
+  params.CopyMode = flag.Bool("c", false, "Copy files instead of moving them")
+  params.PreserveDuplicates = flag.Bool("p", false, "Preserve duplicate files")
+  params.ShowAbout = flag.Bool("about", false, "Show about info")
   flag.Parse()
 
-  if *destPath == "" {
-    destPath = srcPath
+  if *params.DestPath == "" {
+    params.DestPath = params.SrcPath
   }
 
-  if *srcPath == "" || *showAbout {
+  if *params.SrcPath == "" || *params.ShowAbout {
     PrintAbout()
     os.Exit(0)
   }
 
   // Let the magic begins ;)
-  utils.OrganizeFiles(&config, *srcPath, *destPath, *recursive, *copyMode)
+  utils.OrganizeFiles(&config, &params)
 }

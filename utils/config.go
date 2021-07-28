@@ -8,8 +8,17 @@ import (
 	"path/filepath"
 )
 
+type OrganizrParams struct {
+  SrcPath *string
+  DestPath *string
+  Recursive *bool
+  CopyMode *bool
+  PreserveDuplicates *bool
+  ShowAbout *bool
+}
+
 type Folder struct {
-  Ext    string `json:"ext"`
+  Ext string `json:"ext"`
   Folder string `json:"folder"`
 }
 

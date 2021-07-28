@@ -1,13 +1,10 @@
 package utils
 
 import (
-	"crypto/sha256"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
-
-	"github.com/udhos/equalfile"
 )
 
 // Get folder name by file type acording to config
@@ -28,15 +25,17 @@ func GetSubfolder(file string, config *Config) string {
   return strings.ToUpper(ext)
 }
 
-// Find safe filename adding a index on the end of the filename to prevent rewrite files
-func GetFinalPath(currentFilePath string, futureFilePath string, iteration int) string {
+// Find safe output filename
+func GetFinalPath(currentFilePath string, futureFilePath string, preserveDuplicates bool, iteration int) string {
   _, err := os.Stat(futureFilePath)
   if err == nil {
-    // If is same file return same name to replace one for another
-    comparator := equalfile.NewMultiple(nil, equalfile.Options{}, sha256.New(), true)
-    equal, _ := comparator.CompareFile(currentFilePath, futureFilePath)
-    if equal {
-      return futureFilePath;
+    // If preserveDuplicates is false and output file is same that source file
+    // return same name to replace one for another
+    if !preserveDuplicates {
+      equal, _ := equalFiles(currentFilePath, futureFilePath)
+      if equal {
+        return futureFilePath;
+      }
     }
 
     // If files are not the same, remove final "(index)" part of file
@@ -50,7 +49,7 @@ func GetFinalPath(currentFilePath string, futureFilePath string, iteration int) 
     }
 
     // Call recursively until find a valid name for file
-    return GetFinalPath(currentFilePath, fileNewName + " (" + strconv.Itoa(iteration) + ")" + ext, iteration + 1)
+    return GetFinalPath(currentFilePath, fileNewName + " (" + strconv.Itoa(iteration) + ")" + ext, preserveDuplicates, iteration + 1)
   }
   return futureFilePath
 }

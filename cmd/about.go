@@ -1,8 +1,8 @@
 package cmd
 
 import (
-  "fmt"
-  "os"
+	"fmt"
+	"os"
 )
 
 func PrintAbout() {
@@ -15,4 +15,5 @@ func PrintAbout() {
   fmt.Println("Flags:")
   fmt.Println("  -r   Recursive mode")
   fmt.Println("  -c   Copy files instead of moving them")
+  fmt.Println("  -p   Preserve duplicate files (check with MD5)")
 }
