@@ -11,8 +11,7 @@ import (
 	"github.com/udhos/equalfile"
 )
 
-var config *Config
-var params *OrganizrParams
+var context *Context
 
 func createFolder(path string, mode fs.FileMode) bool {
   if _, err := os.Stat(path); os.IsNotExist(err) {
@@ -32,9 +31,9 @@ func copyFile(file string, folder string) bool {
     return false
   }
 
-  destPath := folder + "/" + GetSubfolder(file, config)
+  destPath := folder + "/" + GetSubfolder(file, context)
   createFolder(destPath, 0700)
-  destFilePath := GetFinalPath(file, destPath + "/" + filepath.Base(file), *params.PreserveDuplicates, 1)
+  destFilePath := GetFinalPath(file, destPath + "/" + filepath.Base(file), *context.PreserveDuplicates, 1)
 
   destFile, err := os.Create(destFilePath)
   if err != nil {
@@ -58,10 +57,10 @@ func copyFile(file string, folder string) bool {
 }
 
 func moveFile(file string, folder string) bool {
-  destPath := folder + "/" + GetSubfolder(file, config)
+  destPath := folder + "/" + GetSubfolder(file, context)
   createFolder(destPath, 0700)
 
-  destFilePath := GetFinalPath(file, destPath + "/" + filepath.Base(file), *params.PreserveDuplicates, 1)
+  destFilePath := GetFinalPath(file, destPath + "/" + filepath.Base(file), *context.PreserveDuplicates, 1)
   err := os.Rename(file, destFilePath)
   if err != nil {
     fmt.Println("Error moving file " + file + " to " + destPath)
@@ -77,19 +76,18 @@ func equalFiles(pathA string, pathB string) (bool, error) {
 }
 
 // Read the source path (recursively or not) and move files
-func OrganizeFiles(c *Config, p *OrganizrParams) {
-  config = c
-  params = p
-  err := filepath.Walk(*params.SrcPath, func(filePath string, f os.FileInfo, err error) error {
+func OrganizeFiles(c *Context) {
+  context = c
+  err := filepath.Walk(*context.SrcPath, func(filePath string, f os.FileInfo, err error) error {
     if !f.IsDir() {
-      if *params.CopyMode {
-        copyFile(filePath, *params.DestPath)
+      if *context.CopyMode {
+        copyFile(filePath, *context.DestPath)
       } else {
-        moveFile(filePath, *params.DestPath)
+        moveFile(filePath, *context.DestPath)
       }
     } else {
       // Skip folder if is not source and recursive mode is disabled
-      if !*params.Recursive && filePath != *params.SrcPath {
+      if !*context.Recursive && filePath != *context.SrcPath {
         return filepath.SkipDir
       }
     }
@@ -97,6 +95,6 @@ func OrganizeFiles(c *Config, p *OrganizrParams) {
   })
 
   if err != nil {
-    panic("Error reading path: " + *params.SrcPath)
+    panic("Error reading path: " + *context.SrcPath)
   }
 }

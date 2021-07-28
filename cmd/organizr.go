@@ -8,28 +8,26 @@ import (
 )
 
 func Organizr() {
-  // Load config
-  config := utils.GetConfig()
-
-  // Get and validate flags
-  params := utils.OrganizrParams{}
-  params.SrcPath = flag.String("src", "", "Source directory")
-  params.DestPath = flag.String("dest", "", "Output directory")
-  params.Recursive = flag.Bool("r", false, "Recursive mode")
-  params.CopyMode = flag.Bool("c", false, "Copy files instead of moving them")
-  params.PreserveDuplicates = flag.Bool("p", false, "Preserve duplicate files")
-  params.ShowAbout = flag.Bool("about", false, "Show about info")
+  // Load context
+  context := utils.Context{}
+  context.Config = utils.GetConfig()
+  context.SrcPath = flag.String("src", "", "Source directory")
+  context.DestPath = flag.String("dest", "", "Output directory")
+  context.Recursive = flag.Bool("r", false, "Recursive mode")
+  context.CopyMode = flag.Bool("c", false, "Copy files instead of moving them")
+  context.PreserveDuplicates = flag.Bool("p", false, "Preserve duplicate files")
+  context.ShowAbout = flag.Bool("about", false, "Show about info")
   flag.Parse()
 
-  if *params.DestPath == "" {
-    params.DestPath = params.SrcPath
+  if *context.DestPath == "" {
+    context.DestPath = context.SrcPath
   }
 
-  if *params.SrcPath == "" || *params.ShowAbout {
+  if *context.SrcPath == "" || *context.ShowAbout {
     PrintAbout()
     os.Exit(0)
   }
 
   // Let the magic begins ;)
-  utils.OrganizeFiles(&config, &params)
+  utils.OrganizeFiles(&context)
 }

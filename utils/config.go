@@ -8,15 +8,6 @@ import (
 	"path/filepath"
 )
 
-type OrganizrParams struct {
-  SrcPath *string
-  DestPath *string
-  Recursive *bool
-  CopyMode *bool
-  PreserveDuplicates *bool
-  ShowAbout *bool
-}
-
 type Folder struct {
   Ext string `json:"ext"`
   Folder string `json:"folder"`
@@ -30,6 +21,16 @@ type Output struct {
 type Config struct {
   ExtendsDefault bool `json:"extendsDefault"`
   Output Output `json:"output"`
+}
+
+type Context struct {
+  Config
+  SrcPath *string
+  DestPath *string
+  Recursive *bool
+  CopyMode *bool
+  PreserveDuplicates *bool
+  ShowAbout *bool
 }
 
 func (c Config) GetOutputConfig() ([]Folder, string) {
